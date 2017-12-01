@@ -36,7 +36,7 @@ namespace TestSelenium
             LoginPage loginPage = new LoginPage(PropertyCollection.driver);
             loginPage.goToPage();
             HomePage homePage = loginPage.login("admin", "admin", loginPage);
-            WebDriverWait wait = new WebDriverWait(PropertyCollection.driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(PropertyCollection.driver, TimeSpan.FromSeconds(20));
             wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
             Assert.AreEqual("Home", PropertyCollection.driver.Title);
 
