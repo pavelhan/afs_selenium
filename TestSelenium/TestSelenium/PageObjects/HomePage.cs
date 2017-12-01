@@ -10,11 +10,12 @@ namespace TestSelenium.PageObjects
 {
     public class HomePage
     {
-        private IWebDriver driver;
+        
 
         public HomePage(IWebDriver driver)
         {
-            this.driver = driver;
+            PropertyCollection.driver = driver;
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             PageFactory.InitElements(driver, this);
         }
 
