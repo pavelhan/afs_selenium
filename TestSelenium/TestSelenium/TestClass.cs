@@ -15,6 +15,12 @@ namespace TestSelenium
 {
     public class TestClass
     {
+
+        [SetUp]
+        public void Setup() {
+            PropertyCollection.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+        }
+
         /*public static IWebDriver driver = new ChromeDriver();
 
         
