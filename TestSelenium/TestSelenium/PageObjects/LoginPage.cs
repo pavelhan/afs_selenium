@@ -15,6 +15,7 @@ namespace TestSelenium.PageObjects
         public LoginPage(IWebDriver driver)
         {
             PropertyCollection.driver = driver;
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             PageFactory.InitElements(driver, this);
         }
 
