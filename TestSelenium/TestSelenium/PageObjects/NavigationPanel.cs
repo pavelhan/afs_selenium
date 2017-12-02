@@ -78,6 +78,12 @@ namespace TestSelenium.PageObjects
         [FindsBy(How = How.CssSelector, Using = "#site-header > nav > div > ul > li > a")]
         public IWebElement logOutBtn;
 
+        /// <summary>
+        /// User name label
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = "#site-header > div > div.user-control > div.menu > div.menu-info > span.subtitle2")]
+        public IWebElement userNameLabel;
+
 
 
     }

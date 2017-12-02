@@ -44,11 +44,11 @@ namespace TestSelenium.PageObjects
         public HomePage login(String userName, String password, LoginPage page)
         {
             page.userName.SendKeys(userName);
-            Console.WriteLine("SendKeys to username succeeded");
+            //Console.WriteLine("SendKeys to username succeeded");
             page.password.SendKeys(password);
-            Console.WriteLine("SendKeys to password succeeded");
+            //Console.WriteLine("SendKeys to password succeeded");
             page.loginBtn.Click();
-            Console.WriteLine("Login click successful");
+            //Console.WriteLine("Login click successful");
 
             return new HomePage(PropertyCollection.driver);
         }

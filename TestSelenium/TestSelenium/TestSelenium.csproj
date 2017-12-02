@@ -62,8 +62,9 @@
     <Compile Include="PageObjects\LoginPage.cs" />
     <Compile Include="PageObjects\NavigationPanel.cs" />
     <Compile Include="PageObjects\PropertyCollection.cs" />
-    <Compile Include="TestClass.cs" />
+    <Compile Include="LoginTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCasesData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
