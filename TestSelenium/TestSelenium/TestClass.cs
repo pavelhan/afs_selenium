@@ -20,22 +20,7 @@ namespace TestSelenium
         public void Setup() {
             
         }
-
-        /*public static IWebDriver driver = new ChromeDriver();
-
-        
-
-        [Test]
-        public void myFirstTest()
-        {
-            driver.Navigate().GoToUrl("http://google.com");
-            Assert.AreEqual("Google",driver.Title);
-
-            driver.Close();
-            driver.Quit();
-        }
-
-    */
+     
         [Test]
         public void Login()
         {
