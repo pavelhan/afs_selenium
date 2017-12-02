@@ -28,6 +28,12 @@ namespace TestSelenium.PageObjects
         [FindsBy(How = How.CssSelector, Using = "#formLogin > div:nth-child(8) > div > button")]
         private IWebElement loginBtn;
 
+        [FindsBy(How = How.XPath, Using = "//*[@id='myModalLabel']")]
+        public IWebElement multipleLoginForm;
+
+        [FindsBy(How = How.CssSelector, Using = "#extraLoginParametersModal > div.modal-dialog > div > div.modal-body > div.list-group > a:nth-child(2)")]
+        public IWebElement newSessionBtn;
+
         public void goToPage()
         {
             PropertyCollection.driver.Navigate().GoToUrl("http://nexus-trunk:9780");

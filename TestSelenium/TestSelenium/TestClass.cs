@@ -24,11 +24,17 @@ namespace TestSelenium
         [Test]
         public void Login()
         {
+            WebDriverWait wait = new WebDriverWait(PropertyCollection.driver, TimeSpan.FromSeconds(20));
             LoginPage loginPage = new LoginPage(PropertyCollection.driver);
             loginPage.goToPage();
             HomePage homePage = loginPage.login("admin", "admin", loginPage);
+            //wait.Until(ExpectedConditions.ElementToBeSelected(loginPage.multipleLoginForm));
+            if(wait.Until(ExpectedConditions.TextToBePresentInElement(loginPage.multipleLoginForm, "Connecting to Altium NEXUS Server...")))           
+            {
+            loginPage.newSessionBtn.Click();
+            }
             Console.WriteLine("login executed");
-            WebDriverWait wait = new WebDriverWait(PropertyCollection.driver, TimeSpan.FromSeconds(20));
+            
             wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
             //Thread.Sleep(5000);
             Assert.AreEqual("Home", PropertyCollection.driver.Title);
