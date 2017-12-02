@@ -14,8 +14,7 @@ namespace TestSelenium.PageObjects
 
         public LoginPage(IWebDriver driver)
         {
-            PropertyCollection.driver = driver;
-            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            PropertyCollection.driver = driver;            
             PageFactory.InitElements(driver, this);
         }
 
@@ -33,6 +32,9 @@ namespace TestSelenium.PageObjects
 
         [FindsBy(How = How.CssSelector, Using = "#extraLoginParametersModal > div.modal-dialog > div > div.modal-body > div.list-group > a:nth-child(2)")]
         public IWebElement newSessionBtn;
+
+        [FindsBy(How = How.CssSelector, Using = "#pleaseWaitDiv > div > div > div.modal-header > h4")]
+        public IWebElement waitPopup;
 
         public void goToPage()
         {

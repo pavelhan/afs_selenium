@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace TestSelenium.PageObjects
     public static class PropertyCollection
     {
         public static IWebDriver driver = new ChromeDriver();
+        public static WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
-        
+
 
 
     }

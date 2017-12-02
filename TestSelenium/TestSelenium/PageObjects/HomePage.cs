@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,14 @@ namespace TestSelenium.PageObjects
 {
     public class HomePage
     {
-        
+        NavigationPanel navPanel = new NavigationPanel(PropertyCollection.driver);
 
         public HomePage(IWebDriver driver)
         {
             PropertyCollection.driver = driver;
             //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             PageFactory.InitElements(driver, this);
+            
         }
 
         [FindsBy(How = How.CssSelector, Using = "#site-header > div > div.logo > a > img")]
@@ -31,10 +33,24 @@ namespace TestSelenium.PageObjects
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > div > div > div > h2")]
         private IWebElement productNameCaption;
 
+        //Navigation to Home page via Home page button click
         public void goToPage()
         {
-
+            navPanel.homePageBtn.Click();
         }
+
+        //Logout method
+        public void logOut()
+        {
+            if (navPanel.avatar.Enabled)
+            {
+                navPanel.avatar.Click();
+                navPanel.logOutBtn.Click();
+            }
+            
+        }
+
+
         
 
     }

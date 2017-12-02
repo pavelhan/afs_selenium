@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace TestSelenium.PageObjects
 {
+    /// <summary>
+    /// Class that describes Navigation panel in WEB UI. Contains all navigation buttons except of admin buttons. Also contains user corner elements.
+    /// </summary>
     class NavigationPanel
     {
         protected IWebDriver driver;
@@ -18,29 +21,64 @@ namespace TestSelenium.PageObjects
             PageFactory.InitElements(driver, this);
         }
 
+        /// <summary>
+        /// Home page navigation
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li.active > a > span.text")]
-        protected IWebElement homePageBtn;
+        public IWebElement homePageBtn;
 
+        /// <summary>
+        /// Team page navigation
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li:nth-child(2) > a > span.text")]
-        protected IWebElement teamBtn;
+        public IWebElement teamBtn;
 
+        /// <summary>
+        /// Projects page navigation
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li:nth-child(3) > a > span.text")]
-        protected IWebElement projectsBtn;
+        public IWebElement projectsBtn;
 
+        /// <summary>
+        /// Navigation to Explorer page
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li:nth-child(4) > a > span.text")]
-        protected IWebElement explorerBtn;
+        public IWebElement explorerBtn;
 
+        /// <summary>
+        ///Stream page navigation
+        ///</summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li:nth-child(5) > a > span.text")]
-        protected IWebElement streamBtn;
+        public IWebElement streamBtn;
 
+        /// <summary>
+        /// Part request navigation
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li:nth-child(6) > a > span.text")]
-        protected IWebElement partRequestBtn;
+        public IWebElement partRequestBtn;
 
+        /// <summary>
+        /// Tasks page navigation
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li:nth-child(7) > a > span.text")]
-        protected IWebElement tasksBtn;
+        public IWebElement tasksBtn;
 
+        /// <summary>
+        /// Admin button
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > aside > div > ul > li:nth-child(8) > a > span.text")]
         public IWebElement adminBtn;
+
+        /// <summary>
+        /// User icon button
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = "#site-header > div > div.user-control > div.menu > div.avatar > a")]
+        public IWebElement avatar;
+
+        [FindsBy(How = How.CssSelector, Using = "#site-header > nav > div > ul > li > a")]
+        public IWebElement logOutBtn;
+
+
 
     }
 }

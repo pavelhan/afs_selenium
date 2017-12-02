@@ -18,26 +18,45 @@ namespace TestSelenium
 
         [SetUp]
         public void Setup() {
-            
+            PropertyCollection.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
         }
      
         [Test]
         public void Login()
         {
-            WebDriverWait wait = new WebDriverWait(PropertyCollection.driver, TimeSpan.FromSeconds(20));
+            
             LoginPage loginPage = new LoginPage(PropertyCollection.driver);
             loginPage.goToPage();
             HomePage homePage = loginPage.login("admin", "admin", loginPage);
             //wait.Until(ExpectedConditions.ElementToBeSelected(loginPage.multipleLoginForm));
-            if(wait.Until(ExpectedConditions.TextToBePresentInElement(loginPage.multipleLoginForm, "Connecting to Altium NEXUS Server...")))           
+            Boolean multipleSession = false;
+            //Thread.Sleep(15000);
+            PropertyCollection.wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector("#pleaseWaitDiv > div > div > div.modal-header > h4")));
+            if (loginPage.multipleLoginForm.Displayed)
             {
-            loginPage.newSessionBtn.Click();
+                multipleSession = true;
             }
-            Console.WriteLine("login executed");
+                    
+            //If multiple dialog appeared, we start new session
+            if ( multipleSession == true)
+            {
+                //Click on new "Create new session button"
+                loginPage.newSessionBtn.Click();
+                Console.WriteLine("Login with creation new Session executed");
+                PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
+                Assert.AreEqual("Home", PropertyCollection.driver.Title);
+                homePage.logOut();
+                Console.WriteLine("Log Out successfull");
+            } else {                             
+                Console.WriteLine("Login executed");
+                PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
+                Assert.AreEqual("Home", PropertyCollection.driver.Title);
+                homePage.logOut();
+                Console.WriteLine("Log Out successfull");
+            }
             
-            wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
-            //Thread.Sleep(5000);
-            Assert.AreEqual("Home", PropertyCollection.driver.Title);
+
+            
 
         }
 
