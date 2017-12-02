@@ -28,9 +28,9 @@ namespace TestSelenium
             loginPage.goToPage();
             HomePage homePage = loginPage.login("admin", "admin", loginPage);
             Console.WriteLine("login executed");
-            /*WebDriverWait wait = new WebDriverWait(PropertyCollection.driver, TimeSpan.FromSeconds(20));
-            wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));*/
-            Thread.Sleep(5000);
+            WebDriverWait wait = new WebDriverWait(PropertyCollection.driver, TimeSpan.FromSeconds(20));
+            wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
+            //Thread.Sleep(5000);
             Assert.AreEqual("Home", PropertyCollection.driver.Title);
 
         }
