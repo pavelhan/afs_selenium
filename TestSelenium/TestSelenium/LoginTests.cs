@@ -19,8 +19,7 @@ namespace TestSelenium
     {
 
         [SetUp]
-        public void Setup() {
-            
+        public void Setup() {            
             PropertyCollection.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
         }
 
@@ -85,9 +84,10 @@ namespace TestSelenium
         {
             get
             {
+                String fileDirectoryPath = AppDomain.CurrentDomain.BaseDirectory;
                 var testCases = new List<TestCaseData>();
 
-                using (var fs = File.OpenRead(@"D:\SeleniumC#\TestSelenium\TestSelenium\users.csv"))
+                using (var fs = File.OpenRead(fileDirectoryPath + @"\..\..\users.csv"))
                 using (var sr = new StreamReader(fs))
                 {
                     string line = string.Empty;
