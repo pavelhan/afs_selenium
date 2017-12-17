@@ -34,6 +34,19 @@ namespace AFS_Tests_Selenium
             return TestContext.DataRow[columnHeading].ToString();
         }
 
+        //Take screenshots method
+        private static void takeScreenshot(String folderPath, String fileName)
+        {
+            if (!Directory.Exists(pathToClassFile + "\\" + folderPath))
+            {
+                Directory.CreateDirectory(pathToClassFile + "\\" + folderPath);
+            }
+            ITakesScreenshot screenshotHolder = PropertyCollection.driver as ITakesScreenshot;
+            Screenshot screenshot = screenshotHolder.GetScreenshot();
+            screenshot.SaveAsFile(pathToClassFile + "\\" + folderPath + "\\"
+                + fileName + ".jpeg", ScreenshotImageFormat.Jpeg);
+        }
+
         [TestInitialize()]
         public void Startup()
         {       if(PropertyCollection.driver == null)
@@ -85,7 +98,7 @@ namespace AFS_Tests_Selenium
             }
             catch (NoSuchElementException e)
             {
-                takeScreenshot("LoginSimple", "LoginSimpleTestFolder");
+                takeScreenshot( "LoginSimpleTestFolder", "LoginSimple");
                 Assert.Fail("Login failed. Some element not found after login");
             }
         }
@@ -130,7 +143,7 @@ namespace AFS_Tests_Selenium
             }
             catch (WebDriverTimeoutException e)
             {
-                takeScreenshot("LoginMultipleSessions", "LoginMultipleSessionsTestFolder");
+                takeScreenshot("LoginMultipleSessionsTestFolder", "LoginMultipleSessions");
                 Assert.Fail("Multiple login popup didn't appear.");
             }
 
@@ -175,7 +188,7 @@ namespace AFS_Tests_Selenium
             }
             catch (Exception e)
             {
-                takeScreenshot("WrongUserNameLogin", "WrongUserNameTestFolder");
+                takeScreenshot("WrongUserNameTestFolder", "WrongUserNameLogin");
                 Assert.Fail("Assertion of wrong credentials popup failed, please review screenshot");
             }
         }
@@ -200,21 +213,11 @@ namespace AFS_Tests_Selenium
             }
             catch (Exception e)
             {
-                takeScreenshot("WrongPasswordLogin", "WrongPasswordLoginTestFolder");
+                takeScreenshot("WrongPasswordLoginTestFolder", "WrongPasswordLogin");
                 Assert.Fail("Assertion of wrong credentials popup failed, please review screenshot");
             }
         }
 
-        private static void takeScreenshot(String fileName, String folderPath)
-        {
-            if(!Directory.Exists(pathToClassFile + "\\" + folderPath))
-            {
-                Directory.CreateDirectory(pathToClassFile + "\\" + folderPath);
-            }            
-            ITakesScreenshot screenshotHolder = PropertyCollection.driver as ITakesScreenshot;
-            Screenshot screenshot = screenshotHolder.GetScreenshot();
-            screenshot.SaveAsFile(pathToClassFile + "\\" + folderPath + "\\"
-                + fileName + ".jpeg", ScreenshotImageFormat.Jpeg);
-        }
+        
     }
 }
