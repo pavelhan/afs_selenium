@@ -19,7 +19,7 @@ namespace AFS_Tests_Selenium
         String fileDirectoryPath = AppDomain.CurrentDomain.BaseDirectory;
         String userName;
         String password;
-        public static String pathToClassFile = @"D:\SeleniumC#\AFS_Tests_Selenium\AFS_Tests_Selenium\AFS_Tests_Selenium";
+        public static String pathToClassFile = AppDomain.CurrentDomain.BaseDirectory;
 
 
         private TestContext testContextInstance;
