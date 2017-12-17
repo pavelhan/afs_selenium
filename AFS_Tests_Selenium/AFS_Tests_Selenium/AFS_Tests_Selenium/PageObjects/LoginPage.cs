@@ -36,9 +36,16 @@ namespace AFS_Tests_Selenium.PageObjects
         [FindsBy(How = How.CssSelector, Using = "#pleaseWaitDiv > div > div > div.modal-header > h4")]
         public IWebElement waitPopup;
 
+        [FindsBy(How = How.CssSelector, Using = "#pleaseWaitDiv > div.modal-dialog.modal-sm.modal-please-wait > div > div.modal-body > div:nth-child(2)")]
+        public IWebElement invalidCredPopup;
+        
+
+
+
+
         public void goToPage()
         {
-            PropertyCollection.driver.Navigate().GoToUrl("http://nexus-trunk:9780");
+            PropertyCollection.driver.Navigate().GoToUrl("http://nexus-branch:9780");
         }
 
         public HomePage login(String userName, String password, LoginPage page)

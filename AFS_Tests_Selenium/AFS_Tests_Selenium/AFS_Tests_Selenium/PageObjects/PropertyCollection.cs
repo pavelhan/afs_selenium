@@ -12,6 +12,6 @@ namespace AFS_Tests_Selenium.PageObjects
     public static class PropertyCollection
     {
         public static IWebDriver driver = new ChromeDriver();
-        public static WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+        public static WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
     }
 }

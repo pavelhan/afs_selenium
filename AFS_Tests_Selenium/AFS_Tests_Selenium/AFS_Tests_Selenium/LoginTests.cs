@@ -3,7 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AFS_Tests_Selenium.PageObjects;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.Events;
 using OpenQA.Selenium.Chrome;
+using System.Threading;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace AFS_Tests_Selenium
 {
@@ -13,8 +17,10 @@ namespace AFS_Tests_Selenium
         NavigationPanel navPanel;
         HomePage homePage;
         String fileDirectoryPath = AppDomain.CurrentDomain.BaseDirectory;
-        //public static String filePath = @"D:\SeleniumC#\AFS_Tests_Selenium\AFS_Tests_Selenium\AFS_Tests_Selenium\bin\Debug\users.xlsx";
-        //public static String excelConnString = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0}; Extended Properties='Excel 12.0;'", filePath);
+        String userName;
+        String password;
+        public static String pathToClassFile = @"D:\SeleniumC#\AFS_Tests_Selenium\AFS_Tests_Selenium\AFS_Tests_Selenium";
+
 
         private TestContext testContextInstance;
         public TestContext TestContext
@@ -32,49 +38,100 @@ namespace AFS_Tests_Selenium
         public void Startup()
         {       if(PropertyCollection.driver == null)
                 PropertyCollection.driver = new ChromeDriver();
+                navPanel = new NavigationPanel(PropertyCollection.driver);
         }
 
         [TestCleanup()]
         public void Cleanup()
         {
-            homePage.logOut();
+            if (homePage != null)
+            {
+                homePage.logOut();
+            }
             PropertyCollection.driver.Close();
-            PropertyCollection.driver = null;
+            if (PropertyCollection.driver != null)
+            {
+                PropertyCollection.driver = null;
+            }
+            if(navPanel != null)
+            {
+                navPanel = null;
+            }
+            
             //PropertyCollection.driver.Quit();
         }
 
 
-        [TestMethod]      
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\users.csv","users#csv",
-            DataAccessMethod.Sequential), DeploymentItem("users.csv"), DeploymentItem("chromedriver.exe")]      
-        public void Login()
+        /// <summary>
+        /// Simple login with sequence of users from the "users.csv" list
+        /// </summary>
+        [TestMethod]
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\users.csv", "users#csv",
+            DataAccessMethod.Sequential), DeploymentItem("users.csv"), DeploymentItem("chromedriver.exe")]
+        public void LoginSimple()
         {
-            navPanel = new NavigationPanel(PropertyCollection.driver);
-            homePage = new HomePage(PropertyCollection.driver);
-            String userName = getCredentialsFromFile("userName");
-            String password = getCredentialsFromFile("password");
-            String userProfileName = getCredentialsFromFile("result");
-            LoginPage loginPage = new LoginPage(PropertyCollection.driver);
-            loginPage.goToPage();
-            homePage = loginPage.login(userName, password, loginPage);
-            //wait.Until(ExpectedConditions.ElementToBeSelected(loginPage.multipleLoginForm));
-            Boolean multipleSession = false;
-            //Thread.Sleep(15000);
-            try
-            {
-                PropertyCollection.wait.Until(ExpectedConditions
-                .InvisibilityOfElementLocated(By.CssSelector("#pleaseWaitDiv > div > div > div.modal-header > h4")));
-
-                if (loginPage.multipleLoginForm.Displayed)
-                {
-                    multipleSession = true;
-                }
+            try{
+                userName = getCredentialsFromFile("userName");
+                password = getCredentialsFromFile("password");            
+                String userProfileName = getCredentialsFromFile("result");
+                LoginPage loginPage = new LoginPage(PropertyCollection.driver);
+                loginPage.goToPage();
+                //Actual Login
+                homePage = loginPage.login(userName, password, loginPage);                      
+                Console.WriteLine("Login executed");
+                PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
+                Assert.AreEqual("Home", PropertyCollection.driver.Title);                
+                Assert.AreEqual(userProfileName, navPanel.userNameLabel.Text);
             }
             catch (NoSuchElementException e)
             {
+                takeScreenshot("LoginSimple", "LoginSimpleTestFolder");
+                Assert.Fail("Login failed. Some element not found after login");
+            }
+        }
+
+
+        /// <summary>
+        /// Multiple session login with creation of new session
+        /// </summary>
+        [Ignore]
+        [TestMethod]      
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\users.csv","users#csv",
+            DataAccessMethod.Sequential), DeploymentItem("users.csv"), DeploymentItem("chromedriver.exe")]      
+        public void LoginMultipleSessions()
+        {
+                        
+            userName = "t1";
+            password = "t1";
+            Boolean multipleSession = false;
+            String userProfileName = "t1";
+            LoginPage loginPage = new LoginPage(PropertyCollection.driver);
+            loginPage.goToPage();
+
+            //Actual Login
+            homePage = loginPage.login(userName, password, loginPage);           
+            try
+            {
+                //PropertyCollection.wait.Until(ExpectedConditions
+                //.InvisibilityOfElementLocated(By.CssSelector("#pleaseWaitDiv > div > div > div.modal-header > h4")));
+                //Thread.Sleep(2000);
+                if(PropertyCollection.wait.Until(ExpectedConditions.TextToBePresentInElement(loginPage.multipleLoginForm, "Connecting to Altium NEXUS Server...")))
+                {
+                    if (loginPage.multipleLoginForm.Displayed)
+                    {
+                        multipleSession = true;
+                    }
+                    
+                }                                                           
+            }
+            catch (NoSuchElementException e)
+            {
+                Console.Write(e.InnerException.Message);                
             }
             catch (WebDriverTimeoutException e)
             {
+                takeScreenshot("LoginMultipleSessions", "LoginMultipleSessionsTestFolder");
+                Assert.Fail("Multiple login popup didn't appear.");
             }
 
             //If multiple dialog appeared, we start new session
@@ -84,8 +141,7 @@ namespace AFS_Tests_Selenium
                 loginPage.newSessionBtn.Click();
                 Console.WriteLine("Login with creation new Session executed");
                 PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
-                Assert.AreEqual("Home", PropertyCollection.driver.Title);
-                Console.WriteLine("Log Out successfull");
+                Assert.AreEqual("Home", PropertyCollection.driver.Title);                
                 Assert.AreEqual(userProfileName, navPanel.userNameLabel.Text);
             }
             else
@@ -97,6 +153,68 @@ namespace AFS_Tests_Selenium
                 Console.WriteLine("Log Out successfull");
                 Assert.AreEqual(userProfileName, navPanel.userNameLabel.Text);
             }
+        }
+
+        /// <summary>
+        /// Simple login with invalid user name
+        /// </summary>
+        [TestMethod]        
+        public void WrongUserNameLogin()
+        {
+            try
+            {
+                userName = "invalidUserName";
+                password = "admin";                
+                LoginPage loginPage = new LoginPage(PropertyCollection.driver);
+                loginPage.goToPage();
+                //Actual Login
+                loginPage.login(userName, password, loginPage);                
+                PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(loginPage.invalidCredPopup));
+                Assert.AreEqual("Invalid UserName/Password combination", 
+                    loginPage.invalidCredPopup.Text);
+            }
+            catch (Exception e)
+            {
+                takeScreenshot("WrongUserNameLogin", "WrongUserNameTestFolder");
+                Assert.Fail("Assertion of wrong credentials popup failed, please review screenshot");
+            }
+        }
+
+        /// <summary>
+        /// Simple login with invalid password
+        /// </summary>
+        [TestMethod]
+        public void WrongPasswordLogin()
+        {
+            try
+            {
+                userName = "admin";
+                password = "wrongPassword";
+                LoginPage loginPage = new LoginPage(PropertyCollection.driver);
+                loginPage.goToPage();
+                //Actual Login
+                loginPage.login(userName, password, loginPage);
+                PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(loginPage.invalidCredPopup));
+                Assert.AreEqual("Invalid UserName/Password combination",
+                    loginPage.invalidCredPopup.Text);
+            }
+            catch (Exception e)
+            {
+                takeScreenshot("WrongPasswordLogin", "WrongPasswordLoginTestFolder");
+                Assert.Fail("Assertion of wrong credentials popup failed, please review screenshot");
+            }
+        }
+
+        private static void takeScreenshot(String fileName, String folderPath)
+        {
+            if(!Directory.Exists(pathToClassFile + "\\" + folderPath))
+            {
+                Directory.CreateDirectory(pathToClassFile + "\\" + folderPath);
+            }            
+            ITakesScreenshot screenshotHolder = PropertyCollection.driver as ITakesScreenshot;
+            Screenshot screenshot = screenshotHolder.GetScreenshot();
+            screenshot.SaveAsFile(pathToClassFile + "\\" + folderPath + "\\"
+                + fileName + ".jpeg", ScreenshotImageFormat.Jpeg);
         }
     }
 }
