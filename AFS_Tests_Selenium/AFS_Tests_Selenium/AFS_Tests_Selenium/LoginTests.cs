@@ -108,9 +108,7 @@ namespace AFS_Tests_Selenium
         /// Multiple session login with creation of new session
         /// </summary>
         [Ignore]
-        [TestMethod]      
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\users.csv","users#csv",
-            DataAccessMethod.Sequential), DeploymentItem("users.csv"), DeploymentItem("chromedriver.exe")]      
+        [TestMethod]             
         public void LoginMultipleSessions()
         {
                         
