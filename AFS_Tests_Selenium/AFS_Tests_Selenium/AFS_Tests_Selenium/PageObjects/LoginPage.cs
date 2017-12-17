@@ -38,7 +38,12 @@ namespace AFS_Tests_Selenium.PageObjects
 
         [FindsBy(How = How.CssSelector, Using = "#pleaseWaitDiv > div.modal-dialog.modal-sm.modal-please-wait > div > div.modal-body > div:nth-child(2)")]
         public IWebElement invalidCredPopup;
-        
+
+        [FindsBy(How = How.CssSelector, Using = "#formLogin > div:nth-child(4) > div > span > span")]
+        public IWebElement userNameFieldValidationError;
+
+
+
 
 
 

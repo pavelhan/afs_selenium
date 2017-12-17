@@ -110,15 +110,13 @@ namespace AFS_Tests_Selenium
         [Ignore]
         [TestMethod]             
         public void LoginMultipleSessions()
-        {
-                        
+        {                        
             userName = "t1";
             password = "t1";
             Boolean multipleSession = false;
             String userProfileName = "t1";
             LoginPage loginPage = new LoginPage(PropertyCollection.driver);
             loginPage.goToPage();
-
             //Actual Login
             homePage = loginPage.login(userName, password, loginPage);           
             try
@@ -131,8 +129,7 @@ namespace AFS_Tests_Selenium
                     if (loginPage.multipleLoginForm.Displayed)
                     {
                         multipleSession = true;
-                    }
-                    
+                    }                    
                 }                                                           
             }
             catch (NoSuchElementException e)
@@ -216,6 +213,35 @@ namespace AFS_Tests_Selenium
             }
         }
 
-        
+        /// <summary>
+        /// Empty user name login
+        /// </summary>
+        [TestMethod]
+        public void EmptyUserNameLogin()
+        {
+            try
+            {
+                userName = "";
+                password = "admin";
+                LoginPage loginPage = new LoginPage(PropertyCollection.driver);
+                loginPage.goToPage();
+                //Actual Login
+                loginPage.login(userName, password, loginPage);
+                PropertyCollection.wait.Until(ExpectedConditions.TextToBePresentInElement(loginPage.userNameFieldValidationError,
+                    "User Name is required"));                
+                Assert.AreEqual("User Name is required",
+                    loginPage.userNameFieldValidationError.Text);
+            }
+            catch (NoSuchElementException e)
+            {
+                Console.Write("Unable to find validation field element");
+            }
+            catch (Exception e)
+            {
+                takeScreenshot("EmptyUserNameLoginTestFolder", "EmptyUserNameLogin");
+                Assert.Fail("Assertion of validation error failed, please review screenshot");
+            }
+        }
+
     }
 }
