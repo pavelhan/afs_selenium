@@ -12,7 +12,7 @@ namespace AFS_Tests_Selenium.PageObjects
     {
         private IWebDriver driver;
         protected static String applicationPort = ":9780";
-        private static String host = "nexus-server-tr";
+        private static String host = "nexus-trunk";
         protected static String BaseUrl = "http://" + host;
 
         public BasePage(IWebDriver driver)
