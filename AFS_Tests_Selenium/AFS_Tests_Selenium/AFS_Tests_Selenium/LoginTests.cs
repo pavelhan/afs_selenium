@@ -91,7 +91,7 @@ namespace AFS_Tests_Selenium
                 loginPage.goToPage();
                 //Actual Login
                 homePage = loginPage.login(userName, password, loginPage);                      
-                Console.WriteLine("Login executed");
+                Console.WriteLine("Login button clicked");                
                 PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
                 Assert.AreEqual("Home", PropertyCollection.driver.Title);                
                 Assert.AreEqual(userProfileName, navPanel.userNameLabel.Text);
