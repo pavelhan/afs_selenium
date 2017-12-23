@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AFS_Tests_Selenium.PageObjects
+namespace AFS_Tests_Selenium
 {
     public static class PropertyCollection
     {

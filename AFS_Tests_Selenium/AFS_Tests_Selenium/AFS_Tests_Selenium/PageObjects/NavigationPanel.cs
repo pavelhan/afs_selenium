@@ -11,7 +11,7 @@ namespace AFS_Tests_Selenium.PageObjects
     /// <summary>
     /// Class that describes Navigation panel in WEB UI. Contains all navigation buttons except of admin buttons. Also contains user corner elements.
     /// </summary>
-    class NavigationPanel
+    public class NavigationPanel
     {
         protected IWebDriver driver;
 

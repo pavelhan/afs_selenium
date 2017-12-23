@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace AFS_Tests_Selenium.PageObjects
 {
-    public class LoginPage
+    public class LoginPage : BasePage
     {
 
 
-        public LoginPage(IWebDriver driver)
+        public LoginPage(IWebDriver driver) 
         {
             PropertyCollection.driver = driver;
             PageFactory.InitElements(driver, this);
@@ -41,17 +41,7 @@ namespace AFS_Tests_Selenium.PageObjects
 
         [FindsBy(How = How.CssSelector, Using = "#formLogin > div:nth-child(4) > div > span > span")]
         public IWebElement userNameFieldValidationError;
-
-
-
-
-
-
-
-        public void goToPage()
-        {
-            PropertyCollection.driver.Navigate().GoToUrl("http://nexus-branch:9780");
-        }
+               
 
         public HomePage login(String userName, String password, LoginPage page)
         {
@@ -65,5 +55,6 @@ namespace AFS_Tests_Selenium.PageObjects
             return new HomePage(PropertyCollection.driver);
         }
 
+       
     }
 }

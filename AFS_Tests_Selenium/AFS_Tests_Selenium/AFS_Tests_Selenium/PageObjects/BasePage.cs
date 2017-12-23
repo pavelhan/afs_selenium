@@ -8,25 +8,30 @@ using System.Threading.Tasks;
 
 namespace AFS_Tests_Selenium.PageObjects
 {
-    public abstract class BasePage
+    public class BasePage
     {
         private IWebDriver driver;
-        protected static String applicationPort = ":9780";
-        private static String host = "nexus-trunk";
-        protected static String BaseUrl = "http://" + host;
+        protected static String applicationPort = "9780";
+        protected static String host = "nexus-trunk";
+        //protected static String BaseUrl = "http://" + host;
+        protected static String protocol = "http";
 
-        public BasePage(IWebDriver driver)
+        
+
+        public static void openPage(String pageName)
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            PropertyCollection.driver.Navigate().GoToUrl(getServerUrl() + pageName);
         }
-
-        public abstract void openPage();
 
 
         public IWebDriver getWebDriver()
         {
             return driver;
+        }
+
+        public static String getServerUrl()
+        {
+            return protocol + "://" + host + ":" + applicationPort;
         }
     }
 }
