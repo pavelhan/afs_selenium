@@ -46,7 +46,17 @@ namespace AFS_Tests_Selenium
             prepareUsermanagementTest();
             navPanel.teamBtn.Click();
             PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(usersPage.addUserBtn));
-            addUserPage = usersPage.addUserPopup(usersPage);            
+            addUserPage = usersPage.addUserPopup(usersPage);
+            PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(addUserPage.saveBtn));
+            Random rand = new Random();
+            int randomUserName = rand.Next(100);
+            addUserPage.firstNameInput.SendKeys("auto firstName " + randomUserName);
+            addUserPage.lastNameInput.SendKeys("auto lastName " + randomUserName);
+            addUserPage.emailInput.SendKeys("auto" + randomUserName + "@test.com");
+
+            addUserPage.userNameInput.SendKeys("Auto" + randomUserName);
+            addUserPage.passwordInput.SendKeys("test");
+            addUserPage.saveBtn.Click();
             
         }
     }

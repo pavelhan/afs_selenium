@@ -45,7 +45,7 @@ namespace AFS_Tests_Selenium.PageObjects.Team
         public IWebElement authTypeInput;
 
         //Save user button
-        [FindsBy(How = How.CssSelector, Using = "# editUserModal > div > div > div.modal-footer > button")]
+        [FindsBy(How = How.CssSelector, Using = "#editUserModal > div > div > div.modal-footer > button")]
         public IWebElement saveBtn;
 
 

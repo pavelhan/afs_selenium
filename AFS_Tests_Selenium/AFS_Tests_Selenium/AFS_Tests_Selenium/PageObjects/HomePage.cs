@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,7 @@ namespace AFS_Tests_Selenium.PageObjects
         {
             if (navPanel.avatar.Enabled)
             {
+                PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(navPanel.avatar));
                 navPanel.avatar.Click();
                 navPanel.logOutBtn.Click();
             }
