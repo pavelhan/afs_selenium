@@ -1,2 +1,2 @@
-userName,password,firstName,lastName,result
-t1_auto,t1_auto,FirstName_t1,LastName_t1,t1_auto
+userName,password,firstName,lastName,result,email
+t1_auto,t1_auto,FirstName_t1,LastName_t1,t1_auto,test@email.com

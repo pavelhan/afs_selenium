@@ -14,12 +14,6 @@ namespace AFS_Tests_Selenium
     [TestClass]
     public class LoginTests : BaseTest
     {
-        
-             
-
-        
-        
-
         //Take screenshots method
         private static void takeScreenshot(String folderPath, String fileName)
         {

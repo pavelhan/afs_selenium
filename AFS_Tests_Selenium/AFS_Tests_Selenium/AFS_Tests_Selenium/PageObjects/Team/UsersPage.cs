@@ -9,7 +9,8 @@ using OpenQA.Selenium.Support.PageObjects;
 namespace AFS_Tests_Selenium.PageObjects.Team
 {
     class UsersPage : BasePage
-    {
+    {        
+
         public UsersPage(IWebDriver driver) 
         {
             PropertyCollection.driver = driver;            
@@ -23,7 +24,14 @@ namespace AFS_Tests_Selenium.PageObjects.Team
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > div > div.sub-header > div > div > btn-search > div > input")]
         public IWebElement searchInput;
 
-        //
+        //Open add user popup
+
+    public AddUserPage addUserPopup(UsersPage usersPage)
+        {
+            usersPage.addUserBtn.Click();
+            return new AddUserPage(PropertyCollection.driver);
+        }
+
 
 
 
