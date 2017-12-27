@@ -1,6 +1,7 @@
 ﻿using AFS_Tests_Selenium.PageObjects;
 using AFS_Tests_Selenium.PageObjects.Team;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,10 @@ namespace AFS_Tests_Selenium
             BasePage.openPage("");
             homePage = loginPage.login("admin", "admin", loginPage);            
             PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(homePage.copyUrlButton));
-        }      
+        }
 
+        //Built in user creation
+        [Ignore]
         [TestMethod]
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\usersCreation.csv", "usersCreation#csv",
                 DataAccessMethod.Sequential), DeploymentItem("usersCreation.csv"), DeploymentItem("chromedriver.exe")]
@@ -57,6 +60,8 @@ namespace AFS_Tests_Selenium
             addUserPage.userNameInput.SendKeys("Auto" + randomUserName);
             addUserPage.passwordInput.SendKeys("test");
             addUserPage.saveBtn.Click();
+            
+            
             
         }
     }

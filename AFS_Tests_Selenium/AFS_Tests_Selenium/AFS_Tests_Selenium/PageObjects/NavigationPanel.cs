@@ -72,7 +72,7 @@ namespace AFS_Tests_Selenium.PageObjects
         /// <summary>
         /// User icon button
         /// </summary>
-        [FindsBy(How = How.CssSelector, Using = "#site-header > div > div.user-control > div.menu > div.avatar > a")]
+        [FindsBy(How = How.ClassName, Using = "avatar")]
         public IWebElement avatar;
 
         [FindsBy(How = How.CssSelector, Using = "#site-header > nav > div > ul > li > a")]

@@ -1,10 +1,12 @@
 ﻿using AFS_Tests_Selenium.PageObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AFS_Tests_Selenium
@@ -57,6 +59,29 @@ namespace AFS_Tests_Selenium
         public String getCredentialsFromFile(string columnHeading)
         {
             return TestContext.DataRow[columnHeading].ToString();
+        }
+
+        public bool isElementPresent(IWebElement element)
+        {
+            bool isElementPresent = false;
+            int _seconds = 10;
+            for(int i = 1; i <= _seconds; i++)
+            {
+                Thread.Sleep(1000);
+                if(element.Displayed & element.Enabled)
+                {
+                    isElementPresent = true;
+                }
+                else
+                {
+                    isElementPresent = false;
+                    if(i == 10)
+                    {
+                        throw new TimeoutException("Couldn't find element for 10 sec");
+                    }
+                }                
+            }
+            return isElementPresent;
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AFS_Tests_Selenium.PageObjects
@@ -44,15 +45,11 @@ namespace AFS_Tests_Selenium.PageObjects
         {
             if (navPanel.avatar.Enabled)
             {
+                Thread.Sleep(2000);
                 PropertyCollection.wait.Until(ExpectedConditions.ElementToBeClickable(navPanel.avatar));
                 navPanel.avatar.Click();
                 navPanel.logOutBtn.Click();
             }
-
         }
-
-
-
-
     }
 }

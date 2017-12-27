@@ -24,8 +24,12 @@ namespace AFS_Tests_Selenium.PageObjects.Team
         [FindsBy(How = How.CssSelector, Using = "body > div.outer-wrapper > div > div > div.sub-header > div > div > btn-search > div > input")]
         public IWebElement searchInput;
 
-        //Open add user popup
 
+        //Please wait popup
+        [FindsBy(How = How.Id, Using = "#pleaseWaitDiv")]
+        public IWebElement pleaseWaitPopup;
+
+    //Open add user popup
     public AddUserPage addUserPopup(UsersPage usersPage)
         {
             usersPage.addUserBtn.Click();
